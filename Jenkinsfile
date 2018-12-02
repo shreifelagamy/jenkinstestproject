@@ -21,6 +21,7 @@ pipeline {
                 }
                 stage('deploy to prod'){
                     sh 'cp * ${params.prod}'
+                }
             }
         }
     }
