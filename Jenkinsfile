@@ -1,28 +1,26 @@
 pipeline {
     agent any
+    parameters {
+        string(name: 'dev', defaultValue: '/Applications/MAMP/htdocs/jenkin_project', description: 'Dev server')
+        string(name: 'prod', defaultValue: '/usr/local/var/www/jenkin_project', description: 'Prod Server')
+    }
+    triggers {
+        pollSCM('* * * * *')
+    }
     stages {
-        stage('Init') {
-            steps {
-               echo "Testing...."
-            } 
-        }
-
         stage('Build') {
             steps {
-                echo "Asking...."
-                input message: 'Do you want to complete?'
-                echo "Building..."
-                build job: 'staging'
+                echo "Testing...."
             }
         }
 
         stage('Deploy') {
-            steps {
-                echo "asking...."
-                input message: 'Deploy?...'
-                echo 'Deploying'
-                build job: 'production'
-                echo "Code deploied.... "
+            parallel {
+                stage('deploy to dev'){
+                    sh 'cp * ${params.dev}'
+                }
+                stage('deploy to prod'){
+                    sh 'cp * ${params.prod}'
             }
         }
     }
