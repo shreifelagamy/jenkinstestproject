@@ -18,6 +18,10 @@ pipeline {
 
         stage('Deploy') {
             steps {
+                echo "asking...."
+                input message: 'Deploy?...'
+                echo 'Deploying'
+                build job: 'production'
                 echo "Code deploied.... "
             }
         }
