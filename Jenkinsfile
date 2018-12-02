@@ -9,6 +9,8 @@ pipeline {
 
         stage('Build') {
             steps {
+                echo "Asking...."
+                input message: 'Do you want to complete?'
                 echo "Building..."
                 build job: 'staging'
             }
