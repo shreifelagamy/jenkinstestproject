@@ -17,10 +17,14 @@ pipeline {
         stage('Deploy') {
             parallel {
                 stage('deploy to dev'){
-                    sh 'cp * ${params.dev}'
+                    steps{
+                        sh 'cp * ${params.dev}'
+                    }
                 }
                 stage('deploy to prod'){
-                    sh 'cp * ${params.prod}'
+                    steps {
+                        sh 'cp * ${params.prod}'
+                    }
                 }
             }
         }
